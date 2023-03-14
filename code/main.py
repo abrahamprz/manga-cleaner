@@ -1,10 +1,15 @@
 import requests
 
-base_url = "https://api.mangadex.org"
+BASE_URL = "https://api.mangadex.org"
 
-r = requests.get(
-    f"{base_url}/manga",
-    params={"title": input("Manga title: ")}
-)
+# Function to get manga id from title
+def get_manga_id(title):
+    r = requests.get(
+        f"{BASE_URL}/manga",
+        params={"title": title}
+    )
+    return [manga["id"] for manga in r.json()["data"]]
 
-print([manga["id"] for manga in r.json()["data"]])
+if __name__ == "__main__":
+    manga_id = get_manga_id(input("Enter manga title: "))
+    print(manga_id)
